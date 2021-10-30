@@ -27,6 +27,7 @@ async function run() {
 
         const database = client.db("travelAgency");
         const planCollection = database.collection("tourPlan")
+        const orderCollection = database.collection("Order")
 
         // get api
         app.get('/tours', async (req, res) => {
@@ -41,6 +42,21 @@ async function run() {
             const query = { _id: ObjectId(id) }
             const result = await planCollection.findOne(query);
             res.send(result)
+        })
+
+        //post api
+        app.post('/tours', async (req, res) => {
+            const tours = req.body;
+            console.log(tours)
+            const result = await planCollection.insertOne(tours);
+            res.json(result);
+        })
+
+        // add orders api
+        app.post('/orders', async (req, res) => {
+            const order = req.body;
+            console.log('order', order);
+            res.send('Order processed')
         })
         // delete api by id
         app.delete('/tours/:id', async (req, res) => {
