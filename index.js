@@ -27,7 +27,7 @@ async function run() {
 
         const database = client.db("travelAgency");
         const planCollection = database.collection("tourPlan")
-        const orderCollection = database.collection("Order")
+        const orderCollection = database.collection("order")
 
         // get api
         app.get('/tours', async (req, res) => {
@@ -48,6 +48,7 @@ async function run() {
         app.post('/tours', async (req, res) => {
             const tours = req.body;
             console.log(tours)
+            console.log(res)
             const result = await planCollection.insertOne(tours);
             res.json(result);
         })
@@ -56,14 +57,29 @@ async function run() {
         app.post('/orders', async (req, res) => {
             const order = req.body;
             console.log('order', order);
-            res.send('Order processed')
+            const result = await orderCollection.insertOne(order);
+            res.json(result)
         })
-        // delete api by id
-        app.delete('/tours/:id', async (req, res) => {
+
+        app.get('/orders', async (req, res) => {
+            const cursor = orderCollection.find({});
+            const plans = await cursor.toArray();
+            res.send(plans);
+        })
+
+        app.get('/orders/:id', async (req, res) => {
             const id = req.params.id;
             console.log(id);
             const query = { _id: ObjectId(id) }
-            const result = await planCollection.deleteOne(query);
+            const result = await orderCollection.findOne(query);
+            res.send(result)
+        })
+        // delete api by id
+        app.delete('/orders/:id', async (req, res) => {
+            const id = req.params.id;
+            // console.log(id);
+            const query = { _id: ObjectId(id) }
+            const result = await orderCollection.deleteOne(query);
             res.send(result)
         })
 
