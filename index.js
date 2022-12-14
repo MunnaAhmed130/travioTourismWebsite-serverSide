@@ -90,7 +90,7 @@ async function run() {
 run().catch(console.dir);
 
 app.get("/", (req, res) => {
-    res.send("Travel related server");
+    res.send("Travio server");
 });
 
 app.listen(port, () => {
