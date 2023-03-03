@@ -13,7 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 //uri
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.dgg2e.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.dgg2e.mongodb.net/?retryWrites=true&w=majority`;
 console.log(uri);
 
 //Client
@@ -24,7 +24,7 @@ const client = new MongoClient(uri, {
 
 async function run() {
     try {
-        client.connect();
+        await client.connect();
 
         const database = client.db("travelAgency");
         const planCollection = database.collection("tourPlan");
