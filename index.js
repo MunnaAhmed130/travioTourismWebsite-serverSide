@@ -1,6 +1,6 @@
 const express = require("express");
-const { MongoClient } = require("mongodb");
-const ObjectId = require("mongodb").ObjectId;
+const { MongoClient, ObjectId, ServerApiVersion } = require("mongodb");
+// const ObjectId = require("mongodb").ObjectId;
 
 const cors = require("cors");
 require("dotenv").config();
@@ -14,12 +14,13 @@ app.use(express.json());
 
 //uri
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.dgg2e.mongodb.net/?retryWrites=true&w=majority`;
-console.log(uri);
+// console.log(uri);
 
 //Client
 const client = new MongoClient(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    serverApi: ServerApiVersion.v1,
 });
 
 async function run() {
