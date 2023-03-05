@@ -23,7 +23,7 @@ const client = new MongoClient(uri, {
     serverApi: ServerApiVersion.v1,
 });
 
-async function run() {
+const run = async () => {
     try {
         await client.connect();
 
@@ -87,8 +87,9 @@ async function run() {
     } finally {
         // await client.close();
     }
-}
-run().catch(console.dir);
+};
+
+run().catch(console.error);
 
 app.get("/", (req, res) => {
     res.send("Travio server");
