@@ -26,7 +26,6 @@ const client = new MongoClient(uri, {
 const run = async () => {
     try {
         await client.connect();
-
         const database = client.db("travelAgency");
         const planCollection = database.collection("tourPlan");
         const orderCollection = database.collection("order");
@@ -35,6 +34,14 @@ const run = async () => {
         app.get("/tours", async (req, res) => {
             const cursor = planCollection.find({});
             const plans = await cursor.toArray();
+            res.send(plans);
+        });
+        // get api
+        app.get("/tours/query", async (req, res) => {
+            const query = Number(req.query.limit);
+            console.log(query);
+            const cursor = planCollection.find({});
+            const plans = await cursor.limit(query).toArray();
             res.send(plans);
         });
         // get api by id
