@@ -36,14 +36,16 @@ const run = async () => {
             const plans = await cursor.toArray();
             res.send(plans);
         });
-        // get api
+
+        // get api with query limit
         app.get("/tours/query", async (req, res) => {
             const query = Number(req.query.limit);
-            console.log(query);
+            //  console.log(query);
             const cursor = planCollection.find({});
             const plans = await cursor.limit(query).toArray();
             res.send(plans);
         });
+
         // get api by id
         app.get("/tours/:id", async (req, res) => {
             const id = req.params.id;
@@ -56,8 +58,8 @@ const run = async () => {
         //post api
         app.post("/tours", async (req, res) => {
             const tours = req.body;
-            console.log(tours);
-            console.log(res);
+            // console.log(tours);
+            // console.log(res);
             const result = await planCollection.insertOne(tours);
             res.json(result);
         });
